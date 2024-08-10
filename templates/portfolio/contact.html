@@ -3,10 +3,31 @@
 {% block title %}Contact{% endblock %}
 
 {% block content %}
-    <h2 class="title">Contact Me</h2>
-    <form method="post" class="box">
+    <h2 class="title">Contact</h2>
+    <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="button is-primary">Send</button>
+        <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+                {{ form.name }}
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+                {{ form.email }}
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Message</label>
+            <div class="control">
+                {{ form.message }}
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-primary">Send</button>
+            </div>
+        </div>
     </form>
 {% endblock %}

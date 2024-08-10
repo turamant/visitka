@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Skill, Service, Project, ContactRequest
 from .forms import ContactForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout
 
 
 
@@ -19,16 +21,20 @@ def project_detail(request, pk):
     project = Project.objects.get(pk=pk)
     return render(request, 'portfolio/project_detail.html', {'project': project})
 
+@login_required
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Your message has been sent successfully!')
+            contact_request = form.save(commit=False)
+            contact_request.user = request.user
+            contact_request.save()
+            messages.success(request, "Good job!")
             return redirect('home')
     else:
         form = ContactForm()
     return render(request, 'portfolio/contact.html', {'form': form})
+
 
 @login_required
 def contact_requests(request):
@@ -43,3 +49,19 @@ def delete_contact_request(request, pk):
         contact_request.delete()
         return redirect('contact_requests')
     return render(request, 'portfolio/delete_contact_request.html', {'contact_request': contact_request})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
