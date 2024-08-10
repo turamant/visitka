@@ -1,0 +1,37 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <h2 class="title">My Skills</h2>
+        <div class="columns is-multiline">
+            {% for skill in skills %}
+            <div class="column is-full">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title is-4">{{ skill.name }}</p>
+                        <p>{{ skill.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="title">Services</h2>
+        <div class="columns is-multiline">
+            {% for service in services %}
+            <div class="column is-full">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title is-4">{{ service.name }}</p>
+                        <p>{{ service.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

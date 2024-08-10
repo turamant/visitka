@@ -1,0 +1,35 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Contact Requests{% endblock %}
+
+{% block content %}
+    <h2 class="title">Contact Requests</h2>
+    {% if contact_requests %}
+        <table class="table is-striped is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in contact_requests %}
+                <tr>
+                    <td>{{ request.name }}</td>
+                    <td>{{ request.email }}</td>
+                    <td>{{ request.message }}</td>
+                    <td>{{ request.created_at|date:"d M Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'delete_contact_request' request.pk %}" class="button is-danger is-small">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No contact requests found.</p>
+    {% endif %}
+{% endblock %}

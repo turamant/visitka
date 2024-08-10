@@ -1,0 +1,18 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Delete Contact Request{% endblock %}
+
+{% block content %}
+    <h2 class="title">Delete Contact Request</h2>
+    <p>Are you sure you want to delete the following contact request?</p>
+    <div class="box">
+        <p>Name: {{ contact_request.name }}</p>
+        <p>Email: {{ contact_request.email }}</p>
+        <p>Message: {{ contact_request.message }}</p>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button is-danger">Delete</button>
+        <a href="{% url 'contact_requests' %}" class="button is-primary">Cancel</a>
+    </form>
+{% endblock %}
