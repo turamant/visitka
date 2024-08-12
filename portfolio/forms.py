@@ -1,8 +1,6 @@
 from django import forms
 from .models import ContactRequest
-from django.contrib.auth import get_user_model
 
-User = get_user_model()
 
 class ContactForm(forms.ModelForm):
     class Meta:

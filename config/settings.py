@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    
+    'accounts',
     'portfolio',
     'rest_framework',  
 ]
@@ -65,16 +67,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db', 
-        'PORT': '5432',
-    }
-}
+ENV = os.environ.get('DJANGO_ENV', 'dev')
+
+if ENV == 'prod':
+    from .settings_prod import *
+else:
+    from .settings_dev import *
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -120,3 +118,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
+
+AUTHENTICATION_BACKENDS = ['accounts.backend_email.EmailBackend', 'django.contrib.auth.backends.ModelBackend']
+

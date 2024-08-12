@@ -3,9 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Skill, Service, Project, ContactRequest
 from .forms import ContactForm
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, logout
-
 
 
 def home(request):
@@ -51,17 +48,3 @@ def delete_contact_request(request, pk):
     return render(request, 'portfolio/delete_contact_request.html', {'contact_request': contact_request})
 
 
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})
-
-def logout_view(request):
-    logout(request)
-    return redirect('home')
